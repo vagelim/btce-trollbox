@@ -35,7 +35,7 @@ COLOR_10  = "\033[1;30m"  # ярко-синий
 COLORS   = (COLOR_2, COLOR_3, COLOR_4, COLOR_5,
             COLOR_6, COLOR_7, COLOR_8, COLOR_9)
 
-CHANNEL  = "chat_ru"
+CHANNEL  = "chat_en"
 BTCE_CHAT_URL = "wss://ws.pusherapp.com/app/4e0ebd7a8b66fa3554a4?protocol=6&client=js&version=2.0.0&flash=false"
 TRADINGVIEW_CHAT = "https://www.tradingview.com/message-pipe-es/public"
 CONNECTION_TIMEOUT = 120
@@ -259,6 +259,15 @@ def main():##{
         if opt == "--tradingview":
             stream = tradingviewx(tradingview_transport())
             continue
+
+        if opt == "chat_en":
+            CHANNEL = "chat_en"
+
+        if opt == "chat_ru":
+            CHANNEL = "chat_ru"
+            
+        if opt == "chat_cn":
+            CHANNEL = "chat_cn"
 
     if not stream:
         stream = btcex(btce_transport())
