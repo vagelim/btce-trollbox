@@ -50,7 +50,7 @@ def btce_transport(url=BTCE_CHAT_URL):##{
             ws.connect(url)
             ws.settimeout(CONNECTION_TIMEOUT)
         except Exception, e:
-            print("[!!!] Esteblish connection error: ", e)
+            print("[!!!] Establish connection error: ", e)
             sleep(3)
 
         chat_handshake(ws)
@@ -65,7 +65,7 @@ def tradingview_transport(url=TRADINGVIEW_CHAT):##{
             print("Connected")
             yield tmp
         except Exception, e:
-            print("[!!!] Esteblish connection error: ", e)
+            print("[!!!] Establish connection error: ", e)
             sleep(3)
 ##}
 
@@ -167,6 +167,7 @@ def btcex(transport):##{
     while True:
         try:
             chat_message = ws.recv()
+
         except websocket.socket.sslerror:
             ws = next(transport)
             continue
@@ -246,7 +247,7 @@ btce-trollbox.py <option>
 def main():##{
     stream = None
     opts, args = getopt(argv[1:], "-h", longopts=("help", "btce", "tradingview"))
-
+    args = str(args)
     for opt, value in opts:
         if opt in ("-h", "--help"):
             help()
@@ -260,15 +261,15 @@ def main():##{
             stream = tradingviewx(tradingview_transport())
             continue
 
-        if opt == "chat_en":
-            CHANNEL = "chat_en"
+    global CHANNEL
+    if args.find("chat_en") != -1:
+        CHANNEL = "chat_en"
 
-        if opt == "chat_ru":
-            CHANNEL = "chat_ru"
-            
-        if opt == "chat_cn":
-            CHANNEL = "chat_cn"
+    if args.find("chat_ru") != -1:
+        CHANNEL = "chat_ru"
 
+    if args.find("chat_cn") != -1:
+        CHANNEL = "chat_cn"
     if not stream:
         stream = btcex(btce_transport())
     
